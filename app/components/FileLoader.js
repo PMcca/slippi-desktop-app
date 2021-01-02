@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Select from 'react-select';  
 import {
   Table,
   Icon,
@@ -21,7 +22,13 @@ import PageWrapper from './PageWrapper';
 import Scroller from './common/Scroller';
 import { MIN_GAME_LENGTH_SECONDS } from '../actions/fileLoader';
 
+
 const GAME_BATCH_SIZE = 50;
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' },
+];
 
 export default class FileLoader extends Component {
   static propTypes = {
@@ -35,7 +42,7 @@ export default class FileLoader extends Component {
     setStatsGamePage: PropTypes.func.isRequired,
     deleteSelections: PropTypes.func.isRequired,
     setFilterReplays: PropTypes.func.isRequired,
-    
+
     // error actions
     dismissError: PropTypes.func.isRequired,
 
@@ -51,6 +58,7 @@ export default class FileLoader extends Component {
 
     this.state = {
       selections: [],
+      selectedOption: null
     };
   }
 
@@ -243,6 +251,32 @@ export default class FileLoader extends Component {
     );
   }
 
+  handleChange = selectedOption => {
+    this.setState(
+      { selectedOption },
+      () => console.log(`Option selected:`, this.state.selectedOption)
+    );
+  };
+
+  renderFilterList() {
+    const { selectedOption } = this.state;
+    return (
+      <Select
+        value={selectedOption}
+        onChange={this.handleChange}
+        options={options}
+      />
+    );
+  }
+
+  selected() {
+    console.log("Selected")
+  }
+
+  removed() {
+    console.log("Removed")
+  }
+
   renderEmptyLoader() {
     const folders = this.props.store.folders || {};
     const rootFolderName = this.props.store.rootFolderName || '';
@@ -395,7 +429,7 @@ export default class FileLoader extends Component {
       </Table>
     );
   }
-  
+
   deleteSelections = () => {
     this.props.deleteSelections(this.state.selections);
     this.setState({
@@ -442,11 +476,16 @@ export default class FileLoader extends Component {
         >
           {this.renderGlobalError()}
           {this.renderFilteredFilesNotif()}
+          {this.renderFilterList()}
           {this.renderFileSelection()}
         </Scroller>
         {this.renderQueueButtons()}
       </div>
     );
+  }
+
+  sayHello() {
+    console.log("Hello")
   }
 
   render() {
