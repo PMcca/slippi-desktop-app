@@ -58,7 +58,7 @@ export default class FileLoader extends Component {
 
     this.state = {
       selections: [],
-      selectedOption: null
+      selectedOption: null,
     };
   }
 
@@ -253,8 +253,7 @@ export default class FileLoader extends Component {
 
   handleChange = selectedOption => {
     this.setState(
-      { selectedOption },
-      () => console.log(`Option selected:`, this.state.selectedOption)
+      selectedOption
     );
   };
 
