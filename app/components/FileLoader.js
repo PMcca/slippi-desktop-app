@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Select from 'react-select';  
+import Select from 'react-select';
 import {
   Table,
   Icon,
@@ -253,7 +253,8 @@ export default class FileLoader extends Component {
 
   handleChange = selectedOption => {
     this.setState(
-      selectedOption
+      { selectedOption: selectedOption },
+      () => console.log(`Option selected:`, this.state.selectedOption)
     );
   };
 
@@ -261,9 +262,21 @@ export default class FileLoader extends Component {
     const { selectedOption } = this.state;
     return (
       <Select
+        className={styles['filter-controls']}
         value={selectedOption}
         onChange={this.handleChange}
         options={options}
+        isMulti={true}
+        placeholder= "Characters"
+        theme={theme => ({
+          ...theme,
+          borderRadius: 0,
+          colors: {
+            ...theme.colors,
+            primary25: 'lightcyan',
+            primary: 'darkgrey',
+          },
+        })}
       />
     );
   }
