@@ -363,15 +363,14 @@ export default class FileLoader extends Component {
   renderFileSelection() {
     const store = this.props.store || {};
 
-    var allFiles = (store.filterReplays ? store.files : store.allFiles) || [];
+    const allFiles = (store.filterReplays ? store.files : store.allFiles) || [];
 
-
-    var filesToRender = _.get(store, ['fileLoadState', 'filesToRender']) || [];
+    const filesToRender = _.get(store, ['fileLoadState', 'filesToRender']) || [];
     const { charsToFilter } = this.state || null;
-    if(charsToFilter != null && !charsToFilter.length) {
-      filesToRender = filterCharacters(allFiles, charsToFilter)
+    if(charsToFilter != null && charsToFilter.length > 0) {
+      filterCharacters(allFiles, charsToFilter)
     }
-
+    
     const filesOffset = _.get(store, ['fileLoadState', 'filesOffset']) || 0;
     const hasLoaded = _.get(store, ['fileLoadState', 'hasLoaded']) || false;
 

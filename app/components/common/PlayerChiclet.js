@@ -163,7 +163,6 @@ export default class PlayerChiclet extends Component {
     const settings = this.props.game.getSettings() || {};
     const players = settings.players || {};
     const playersByIndex = _.keyBy(players, 'playerIndex');
-    console.log("INDEX: " + playersByIndex)
     const player = playersByIndex[this.props.playerIndex] || {};
 
     const containerClasses = classNames({
