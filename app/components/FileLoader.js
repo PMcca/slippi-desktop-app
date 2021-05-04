@@ -21,14 +21,11 @@ import FolderBrowser from './common/FolderBrowser';
 import PageWrapper from './PageWrapper';
 import Scroller from './common/Scroller';
 import { MIN_GAME_LENGTH_SECONDS } from '../actions/fileLoader';
+import { getCharacterList, filterCharacters } from '../utils/filter'
 
 
 const GAME_BATCH_SIZE = 50;
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-];
+const options = getCharacterList();
 
 export default class FileLoader extends Component {
   static propTypes = {
@@ -58,7 +55,7 @@ export default class FileLoader extends Component {
 
     this.state = {
       selections: [],
-      selectedOption: null,
+      charsToFilter: null,
     };
   }
 
@@ -251,19 +248,19 @@ export default class FileLoader extends Component {
     );
   }
 
-  handleChange = selectedOption => {
+  handleChange = charsToFilter => {
     this.setState(
-      { selectedOption: selectedOption },
-      () => console.log(`Option selected:`, this.state.selectedOption)
+      { charsToFilter: charsToFilter },
+      () => console.log(`Option selected:`, this.state.charsToFilter)
     );
   };
 
   renderFilterList() {
-    const { selectedOption } = this.state;
+    const { charsToFilter } = this.state;
     return (
       <Select
         className={styles['filter-controls']}
-        value={selectedOption}
+        value={charsToFilter}
         onChange={this.handleChange}
         options={options}
         isMulti={true}
@@ -273,7 +270,7 @@ export default class FileLoader extends Component {
           borderRadius: 0,
           colors: {
             ...theme.colors,
-            primary25: 'lightcyan',
+            primary25: '#2ECC40',
             primary: 'darkgrey',
           },
         })}
@@ -366,9 +363,15 @@ export default class FileLoader extends Component {
   renderFileSelection() {
     const store = this.props.store || {};
 
-    const allFiles = (store.filterReplays ? store.files : store.allFiles) || [];
+    var allFiles = (store.filterReplays ? store.files : store.allFiles) || [];
 
-    const filesToRender = _.get(store, ['fileLoadState', 'filesToRender']) || [];
+
+    var filesToRender = _.get(store, ['fileLoadState', 'filesToRender']) || [];
+    const { charsToFilter } = this.state || null;
+    if(charsToFilter != null && !charsToFilter.length) {
+      filesToRender = filterCharacters(allFiles, charsToFilter)
+    }
+
     const filesOffset = _.get(store, ['fileLoadState', 'filesOffset']) || 0;
     const hasLoaded = _.get(store, ['fileLoadState', 'hasLoaded']) || false;
 
