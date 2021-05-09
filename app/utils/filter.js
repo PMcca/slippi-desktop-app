@@ -1,7 +1,10 @@
 import React from 'react';
 import { Image } from 'semantic-ui-react';
+// import { stages as stageUtils } from '@slippi/slippi-js';
+import types from '@slippi/slippi-js'
+import { characters as charUtils } from '@slippi/slippi-js'
 import getLocalImage from './image';
-import styles from '../components/FileLoader.scss'
+import styles from '../components/FileLoader.scss';
 
 // Values are based on mappings between character and Slippi's numerical index
 // but in the filter they are represented alphabetically.
@@ -34,8 +37,20 @@ const characterList = [
   { value: "21", label: <div><Image className={styles["filter-list"]} src={getLocalImage("stock-icon-21-0.png")} inline={true} spaced='bottom'/>Young Link</div> },
 ]
 
+const tst = generateCharacterList()
+
 export function getCharacterList() {
   return characterList;
+}
+
+function generateCharacterList() {
+  let chars = [];
+  let i;
+  for(i = 0; i < 26; i++) {
+    const charName = charUtils.getCharacterName(i)
+    chars.push({ value: i, label: <div><Image className={styles["filter-list"]} src={getLocalImage(`stock-icon-${  i  }-0.png`)} inline={true} spaced='bottom'/>${ charName }</div> })
+  }
+  return chars;
 }
 
 // Filter a list of files given a list of characters to filter by
@@ -50,4 +65,16 @@ export function filterCharacters(files, chars) {
   })
 
   return filteredFiles
+}
+
+export function filterStages(files, stages) {
+  let filteredFiles = files;
+  stages.forEach(stage => {
+    filteredFiles = filteredFiles.filter(file => {
+      const settings = file.game.getSettings();
+      return settings.stageId === parseInt(stage.value, 10);
+    })
+  })
+
+  return filteredFiles;
 }

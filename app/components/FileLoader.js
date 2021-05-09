@@ -23,9 +23,8 @@ import Scroller from './common/Scroller';
 import { MIN_GAME_LENGTH_SECONDS } from '../actions/fileLoader';
 import { getCharacterList, filterCharacters } from '../utils/filter'
 
-
 const GAME_BATCH_SIZE = 50;
-const options = getCharacterList();
+const characterFilters = getCharacterList();
 
 export default class FileLoader extends Component {
   static propTypes = {
@@ -56,6 +55,7 @@ export default class FileLoader extends Component {
     this.state = {
       selections: [],
       charsToFilter: null,
+      stagesToFilter: null,
     };
   }
 
@@ -248,21 +248,20 @@ export default class FileLoader extends Component {
     );
   }
 
-  handleChange = charsToFilter => {
+  handleCharacterChange = charsToFilter => {
     this.setState(
       { charsToFilter: charsToFilter },
-      () => console.log(`Option selected:`, this.state.charsToFilter)
     );
   };
 
-  renderFilterList() {
+  renderFilterLists() {
     const { charsToFilter } = this.state;
     return (
       <Select
         className={styles['filter-controls']}
         value={charsToFilter}
-        onChange={this.handleChange}
-        options={options}
+        onChange={this.handleCharacterChange}
+        options={characterFilters}
         isMulti={true}
         placeholder= "Characters"
         theme={theme => ({
@@ -482,7 +481,7 @@ export default class FileLoader extends Component {
         >
           {this.renderGlobalError()}
           {this.renderFilteredFilesNotif()}
-          {this.renderFilterList()}
+          {this.renderFilterLists()}
           {this.renderFileSelection()}
         </Scroller>
         {this.renderQueueButtons()}
