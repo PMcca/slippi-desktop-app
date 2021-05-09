@@ -278,14 +278,6 @@ export default class FileLoader extends Component {
     );
   }
 
-  selected() {
-    console.log("Selected")
-  }
-
-  removed() {
-    console.log("Removed")
-  }
-
   renderEmptyLoader() {
     const folders = this.props.store.folders || {};
     const rootFolderName = this.props.store.rootFolderName || '';
@@ -365,12 +357,12 @@ export default class FileLoader extends Component {
 
     const allFiles = (store.filterReplays ? store.files : store.allFiles) || [];
 
-    const filesToRender = _.get(store, ['fileLoadState', 'filesToRender']) || [];
+    let filesToRender = _.get(store, ['fileLoadState', 'filesToRender']) || [];
     const { charsToFilter } = this.state || null;
     if(charsToFilter != null && charsToFilter.length > 0) {
-      filterCharacters(allFiles, charsToFilter)
+      filesToRender = filterCharacters(filesToRender, charsToFilter)
     }
-    
+
     const filesOffset = _.get(store, ['fileLoadState', 'filesOffset']) || 0;
     const hasLoaded = _.get(store, ['fileLoadState', 'hasLoaded']) || false;
 
@@ -496,10 +488,6 @@ export default class FileLoader extends Component {
         {this.renderQueueButtons()}
       </div>
     );
-  }
-
-  sayHello() {
-    console.log("Hello")
   }
 
   render() {
