@@ -1140,7 +1140,7 @@
     array-from "^2.1.1"
     lodash.get "^4.4.2"
 
-"@slippi/slippi-js@6.0.1":
+"@slippi/slippi-js@^6.0.1":
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/@slippi/slippi-js/-/slippi-js-6.0.1.tgz#c1142e917501edc8238768de9166d4c7da9e9a8c"
   integrity sha512-QZF5olkd8jhuGXH9kbcdqyZbxXXzUTtT3MNdM+vG9MMIFB+YartSVojmrmvB8p004e2fc8fedw1UXrxsr96YuA==
