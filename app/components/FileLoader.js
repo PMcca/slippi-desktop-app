@@ -21,10 +21,10 @@ import FolderBrowser from './common/FolderBrowser';
 import PageWrapper from './PageWrapper';
 import Scroller from './common/Scroller';
 import { MIN_GAME_LENGTH_SECONDS } from '../actions/fileLoader';
-import { getCharacterList, filterCharacters } from '../utils/filter'
+import { generateCharacterList, filterCharacters } from '../utils/filter'
 
 const GAME_BATCH_SIZE = 50;
-const characterFilters = getCharacterList();
+const characterFilters = generateCharacterList();
 
 export default class FileLoader extends Component {
   static propTypes = {

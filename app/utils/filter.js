@@ -12,7 +12,7 @@ export function getCharacterList() {
   return characterList;
 }
 
-function generateCharacterList() {
+export function generateCharacterList() {
   const chars = [];
   let i;
   for(i = 0; i < 26; i++) {

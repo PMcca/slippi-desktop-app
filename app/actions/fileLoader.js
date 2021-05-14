@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import fs from 'fs';
 import path from 'path';
-import SlippiGame from '@slippi/slippi-js';
+import { SlippiGame } from '@slippi/slippi-js';
 import { shell } from 'electron';
 import * as timeUtils from '../utils/time';
 
