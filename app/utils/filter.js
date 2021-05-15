@@ -1,8 +1,6 @@
 import React from 'react';
 import { Image } from 'semantic-ui-react';
-import { stages as stageUtils, characters as charUtils } from '@slippi/slippi-js';
-import types from '@slippi/slippi-js'
-// import { characters as charUtils } from '@slippi/slippi-js'
+import { Stage, stages as stageUtils, characters as charUtils } from '@slippi/slippi-js';
 import getLocalImage from './image';
 import styles from '../components/FileLoader.scss';
 
@@ -24,7 +22,8 @@ export function generateCharacterList() {
 }
 
 function generateStageList() {
-  let stgs = types.Stage
+  let FOD = Stage
+  Object.keys(Stage).forEach(s => console.log(s));
   const stages = [];
   let i;
   for(i = 2; i < 29; i++) {
