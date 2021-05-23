@@ -22,7 +22,9 @@ export async function assertDolphinInstallation(
   log: (message: string) => void,
 ): Promise<void> {
   try {
-    await findDolphinExecutable(type);
+    await findDolphinExecutable(type).then((val) => {
+
+    });
     log(`Found existing ${type} Dolphin executable.`);
     log(`Checking if we need to update ${type} Dolphin`);
     const data = await getLatestReleaseData(type);

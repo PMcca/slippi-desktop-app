@@ -1,6 +1,7 @@
 import { app, remote } from "electron";
 import * as fs from "fs-extra";
 import path from "path";
+import log from 'electron-log';
 
 export enum DolphinLaunchType {
   NETPLAY = "netplay",
@@ -40,8 +41,14 @@ export async function findDolphinExecutable(type: DolphinLaunchType): Promise<st
   });
 
   if (!result) {
-    throw new Error(`No Dolphin found in: ${dolphinPath}`);
+    const msg = `No Dolphin found in ${dolphinPath}`;
+    log.info(msg);
+    return Promise.reject(msg);
   }
 
   return path.join(dolphinPath, result);
+}
+
+export function checkDolphinExists(type: DolphinLaunchType): boolean {
+  return true;
 }
